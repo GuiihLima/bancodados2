@@ -8,8 +8,7 @@ RUN yes | unminimize
 RUN apt-get update && apt-get clean
 
 RUN apt-get install -y openjdk-8-jdk && \
-    apt-get install -y inetutils-ping && \
-    apt-get install -y wget && \
-    apt-get install -y man-db
+    apt-get install -y libderby-java && \
+    apt-get install -y ant 
 
 WORKDIR /home/public

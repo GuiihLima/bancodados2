@@ -1,0 +1,489 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: GGI038; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE "GGI038" IS 'Banco de dados para exemplos de consultas em SQL';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: agencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE agencia (
+    nome_agencia character varying(50) NOT NULL,
+    cidade_agencia character varying(50),
+    ativo_agencia double precision
+);
+
+
+ALTER TABLE public.agencia OWNER TO postgres;
+
+--
+-- Name: cliente; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE cliente (
+    nome_cliente character varying(80) NOT NULL,
+    rua_cliente character varying(50) NOT NULL,
+    cidade_cliente character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.cliente OWNER TO postgres;
+
+--
+-- Name: conta; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE conta (
+    numero_conta integer NOT NULL,
+    nome_agencia character varying(50) NOT NULL,
+    nome_cliente character varying(80) NOT NULL,
+    saldo_conta integer
+);
+
+
+ALTER TABLE public.conta OWNER TO postgres;
+
+--
+-- Name: deposito; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE deposito (
+    numero_deposito integer NOT NULL,
+    numero_conta integer NOT NULL,
+    nome_agencia character varying(50) NOT NULL,
+    nome_cliente character varying(80) NOT NULL,
+    saldo_deposito double precision NOT NULL
+);
+
+
+ALTER TABLE public.deposito OWNER TO postgres;
+
+--
+-- Name: emprestimo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE emprestimo (
+    numero_emprestimo integer NOT NULL,
+    nome_cliente character varying(80) NOT NULL,
+    numero_conta integer NOT NULL,
+    nome_agencia character varying(50) NOT NULL,
+    valor_emprestimo double precision,
+    juros_emprestimo integer,
+    data_emprestimo character varying(50)
+);
+
+
+ALTER TABLE public.emprestimo OWNER TO postgres;
+
+--
+-- Data for Name: agencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY agencia (nome_agencia, cidade_agencia, ativo_agencia) FROM stdin;
+Central	São Tome das Letras	28897.0900000000001
+Cidade Jardim	Contagem	51329.5800000000017
+Gameleira	Pedro Leopoldo	9391.1200000000008
+Pampulha	Santa Luzia	79725.9199999999983
+PUC	Pedro Leopoldo	66088.8500000000058
+UFMG	Betim	83193.6600000000035
+\.
+
+
+--
+-- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY cliente (nome_cliente, rua_cliente, cidade_cliente) FROM stdin;
+Adilson de Oliveira	Rua Pernamabuco	Belo Horizonte
+Alexandre Marcio de Souza	Rua 18 de Novembro	Divinópolis
+Alysson Melim Rocha	Rua da Bahia	Governador Valadares
+Anderson Adilson de Oliveira	Rua Barão Homem de Melo	Itambacuri
+Andrade de Freitas	Rua Barão Homem de Melo	Divinópolis
+Andre Cabral da Silva	Avenida Cristiano Machado	Governador Valadares
+Bruno Miranda Pacheco de Castro	Rua Barão Homem de Melo	Itambacuri
+Bruno Tadeu Pita	Rua Isaac Newton	Governador Valadares
+Carla Soares	Rua Indepêndencia	São Tome das Letras
+Carolina Soares	Rua Indepêndencia	Betim
+Cláudia Santos Mota	Rua Coronel Onofre	Contagem
+Clayton Pereira Bonfim	Rua dos Goitacazes	Coronel Fabriciano
+Elvis Fernando Da Silva	Rua São Paulo	Pedro Leopoldo
+Eurides Alves da Silva	Avenida Wireless	Divinópolis
+Everardo Monfort Leitão	Avenida Wireless	Itambacuri
+Fábio Couto Amorim	Rua Coronel Onofre	Contagem
+Felippe Peres Bichara Junior	Praça da Liberdade	Governador Valadares
+Frederico de Oliveira Guimarães	Avenida Wireless	Governador Valadares
+Geraldo Oliveira	Ilha das Flores	São Tome das Letras
+Germano Luiz de Paula	Rua Von Braun	Santa Luzia
+Gilmar Negreiros Carvalho	Ilha das Flores	Governador Valadares
+Gomes Dias Santos	Rua Indepêndencia	Santa Luzia
+Gustavo Baer Albuquerque 	Avenida Wireless	Itambacuri
+Jefferson Oliveira	Avenida Galileu Galilei	Coronel Fabriciano
+João Boiadeiro	Rua da Bahia	Coronel Fabriciano
+Joaquim Carlos Reis	Avenida Galileu Galilei	Santa Luzia
+José Moreira da Silva	Rua São Paulo	Santa Luzia
+Josenaldo Teixeira Soares	Avenida Galileu Galilei	Contagem
+Lorena Albuquerque Gonçalves Galdin	Avenida Cristiano Machado	Coronel Fabriciano
+Luciana Alves Teixeira	Rua Barão Homem de Melo	Coronel Fabriciano
+Manuel Oliveira	Avenida Cristiano Machado	Itambacuri
+Marcelo Leite Maciel	Rua Isaac Newton	Itambacuri
+Marco Aurélio Santos	Avenida Galileu Galilei	Itambacuri
+Marcos Andrade	Rua Patric Stewart	Contagem
+Marcos Cláudio	Rua Indepêndencia	Pedro Leopoldo
+Marcos Ferreira Dinardi	Rua Albert Einsten	Pedro Leopoldo
+Maria das Dores	Rua Barão Homem de Melo	Betim
+Maria do Socorro	Rua Indepêndencia	Pedro Leopoldo
+Maria Lúcia Alves	Rua Barão Homem de Melo	Divinópolis
+Maria Raquel Teixeira de Castro	Rua da Bahia	Divinópolis
+Marta Avelar Santos	Rua dos Goitacazes	Santa Luzia
+Norton Saint Clair  Silva	Avenida Afonso Pena	Coronel Fabriciano
+Pedro Alvares	Rua Indepêndencia	Divinópolis
+Rafael Mesquita Gondim	Ilha das Flores	Santa Luzia
+Reinaldo Pereira da Silva	Avenida Wireless	Coronel Fabriciano
+Thiago Andrade Fiuza	Rua Pernamabuco	Itambacuri
+Thiago Leôncio Guimarães	Avenida do Silício	Betim
+Wagner Eustáquio Diniz	Avenida do Silício	Santa Luzia
+Wantuil Diniz e Souza	Rua São Paulo	Itambacuri
+\.
+
+
+--
+-- Data for Name: conta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY conta (numero_conta, nome_agencia, nome_cliente, saldo_conta) FROM stdin;
+1274	UFMG	Marcos Cláudio	0
+1746	Central	Gilmar Negreiros Carvalho	0
+3438	PUC	Everardo Monfort Leitão	0
+3694	UFMG	Clayton Pereira Bonfim	0
+4378	Pampulha	Marco Aurélio Santos	0
+4564	Gameleira	Bruno Tadeu Pita	0
+6908	UFMG	Thiago Leôncio Guimarães	0
+7983	Pampulha	Fábio Couto Amorim	0
+10243	Central	Marcos Cláudio	0
+10448	PUC	Reinaldo Pereira da Silva	0
+11506	PUC	Bruno Tadeu Pita	0
+11633	PUC	Marcos Andrade	0
+12203	PUC	Marcos Andrade	0
+12839	Cidade Jardim	Maria Raquel Teixeira de Castro	0
+16896	Pampulha	Joaquim Carlos Reis	0
+17483	Gameleira	Andre Cabral da Silva	0
+17801	UFMG	Andre Cabral da Silva	0
+17890	Cidade Jardim	Frederico de Oliveira Guimarães	0
+19206	Central	Germano Luiz de Paula	0
+21399	UFMG	Reinaldo Pereira da Silva	0
+21558	Cidade Jardim	Gustavo Baer Albuquerque 	0
+22412	PUC	Bruno Miranda Pacheco de Castro	0
+23548	Cidade Jardim	Andrade de Freitas	0
+23647	Cidade Jardim	Marcos Cláudio	0
+24523	Cidade Jardim	Fábio Couto Amorim	0
+24715	Cidade Jardim	Josenaldo Teixeira Soares	0
+25358	Gameleira	Felippe Peres Bichara Junior	0
+26106	Cidade Jardim	Luciana Alves Teixeira	0
+26378	Central	Bruno Tadeu Pita	0
+26396	PUC	Marco Aurélio Santos	0
+27296	Gameleira	Frederico de Oliveira Guimarães	0
+28154	UFMG	Germano Luiz de Paula	0
+28861	Central	Thiago Andrade Fiuza	0
+28935	Gameleira	Marta Avelar Santos	0
+29089	UFMG	Thiago Leôncio Guimarães	0
+37330	PUC	Marcelo Leite Maciel	0
+38132	Pampulha	Reinaldo Pereira da Silva	0
+38696	PUC	Marco Aurélio Santos	0
+39220	Cidade Jardim	Alysson Melim Rocha	0
+39587	UFMG	Alexandre Marcio de Souza	0
+39611	Cidade Jardim	Marcelo Leite Maciel	0
+40007	Central	Gustavo Baer Albuquerque 	0
+40072	Gameleira	Frederico de Oliveira Guimarães	0
+40907	Pampulha	Adilson de Oliveira	0
+42450	Gameleira	Wantuil Diniz e Souza	0
+44009	PUC	Reinaldo Pereira da Silva	0
+46389	Pampulha	Carolina Soares	0
+46953	PUC	Maria Lúcia Alves	0
+48629	Central	Marcos Ferreira Dinardi	0
+49971	Gameleira	Maria Lúcia Alves	0
+50281	Pampulha	Reinaldo Pereira da Silva	0
+51421	Cidade Jardim	Geraldo Oliveira	0
+52063	PUC	Marcos Andrade	0
+52436	PUC	Gilmar Negreiros Carvalho	0
+53568	Central	Joaquim Carlos Reis	0
+53618	Gameleira	Marco Aurélio Santos	0
+53892	UFMG	Gomes Dias Santos	0
+54801	UFMG	Carolina Soares	0
+55629	Pampulha	Andre Cabral da Silva	0
+55816	Central	Fábio Couto Amorim	0
+56490	Gameleira	Geraldo Oliveira	0
+56779	Gameleira	Gilmar Negreiros Carvalho	0
+57587	Pampulha	Frederico de Oliveira Guimarães	0
+57785	Central	Reinaldo Pereira da Silva	0
+59980	Pampulha	Joaquim Carlos Reis	0
+61956	Pampulha	Luciana Alves Teixeira	0
+62911	PUC	Clayton Pereira Bonfim	0
+66763	Central	Thiago Leôncio Guimarães	0
+68167	Cidade Jardim	Marco Aurélio Santos	0
+69989	Pampulha	Marcelo Leite Maciel	0
+72535	Gameleira	Marco Aurélio Santos	0
+72802	Gameleira	Eurides Alves da Silva	0
+72936	Pampulha	Maria das Dores	0
+76649	Cidade Jardim	Gustavo Baer Albuquerque 	0
+79302	UFMG	Bruno Miranda Pacheco de Castro	0
+80096	Cidade Jardim	Eurides Alves da Silva	0
+84232	Cidade Jardim	Cláudia Santos Mota	0
+84374	Gameleira	Alysson Melim Rocha	0
+84751	Pampulha	Jefferson Oliveira	0
+85993	Gameleira	Everardo Monfort Leitão	0
+86410	Cidade Jardim	Reinaldo Pereira da Silva	0
+86697	Central	Wantuil Diniz e Souza	0
+87923	Pampulha	Thiago Leôncio Guimarães	0
+88162	Central	Jefferson Oliveira	0
+88294	PUC	Jefferson Oliveira	0
+89098	PUC	Maria Lúcia Alves	0
+89546	Pampulha	Lorena Albuquerque Gonçalves Galdin	0
+89893	PUC	Andre Cabral da Silva	0
+90061	Pampulha	Anderson Adilson de Oliveira	0
+91810	PUC	Andrade de Freitas	0
+93134	Pampulha	Germano Luiz de Paula	0
+93878	Gameleira	Andre Cabral da Silva	0
+94443	Pampulha	Gilmar Negreiros Carvalho	0
+94501	UFMG	Everardo Monfort Leitão	0
+95101	UFMG	Thiago Leôncio Guimarães	0
+96517	Pampulha	Andrade de Freitas	0
+97449	UFMG	Wagner Eustáquio Diniz	0
+97733	PUC	Felippe Peres Bichara Junior	0
+99600	UFMG	Marcos Ferreira Dinardi	0
+\.
+
+
+--
+-- Data for Name: deposito; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY deposito (numero_deposito, numero_conta, nome_agencia, nome_cliente, saldo_deposito) FROM stdin;
+1616079	54801	UFMG	Carolina Soares	3516.2800000000002
+1888916	94501	UFMG	Everardo Monfort Leitão	1167.17000000000007
+2748656	17483	Gameleira	Andre Cabral da Silva	3798.30999999999995
+3055715	59980	Pampulha	Joaquim Carlos Reis	498.560000000000002
+3070054	22412	PUC	Bruno Miranda Pacheco de Castro	2512.88000000000011
+3419360	25358	Gameleira	Felippe Peres Bichara Junior	3843.92999999999984
+3544439	93134	Pampulha	Germano Luiz de Paula	2197.09999999999991
+4068254	3438	PUC	Everardo Monfort Leitão	2395.36999999999989
+5454419	72535	Gameleira	Marco Aurélio Santos	3164.44000000000005
+5605952	25358	Gameleira	Felippe Peres Bichara Junior	3573.94000000000005
+6366158	28154	UFMG	Germano Luiz de Paula	2577.57000000000016
+6394171	52063	PUC	Marcos Andrade	3493.63000000000011
+6602924	3694	UFMG	Clayton Pereira Bonfim	3150.55000000000018
+6636402	62911	PUC	Clayton Pereira Bonfim	81.2900000000000063
+6745588	52436	PUC	Gilmar Negreiros Carvalho	1435.68000000000006
+6795474	39587	UFMG	Alexandre Marcio de Souza	1201.36999999999989
+6848978	28861	Central	Thiago Andrade Fiuza	479.660000000000025
+7090687	56779	Gameleira	Gilmar Negreiros Carvalho	3679.38000000000011
+7174552	84232	Cidade Jardim	Cláudia Santos Mota	3599.28999999999996
+7268534	89893	PUC	Andre Cabral da Silva	692.159999999999968
+7336800	86697	Central	Wantuil Diniz e Souza	84.1700000000000017
+7740954	93134	Pampulha	Germano Luiz de Paula	43.0499999999999972
+8795330	95101	UFMG	Thiago Leôncio Guimarães	1753.42000000000007
+\.
+
+
+--
+-- Data for Name: emprestimo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY emprestimo (numero_emprestimo, nome_cliente, numero_conta, nome_agencia, valor_emprestimo, juros_emprestimo, data_emprestimo) FROM stdin;
+5	Marco Aurélio Santos	4378	Pampulha	1070.51999999999998	6	19/6/1998
+37	Reinaldo Pereira da Silva	44009	PUC	1085.79999999999995	17	26/1/1998
+94	Joaquim Carlos Reis	53568	Central	395.050000000000011	13	31/4/1998
+101	Gustavo Baer Albuquerque 	76649	Cidade Jardim	154.139999999999986	16	10/1/1998
+105	Marcos Andrade	11633	PUC	886.850000000000023	19	17/7/1998
+111	Alysson Melim Rocha	84374	Gameleira	1487.80999999999995	19	15/4/2000
+207	Anderson Adilson de Oliveira	90061	Pampulha	1728.13000000000011	17	2/3/2000
+218	Bruno Tadeu Pita	4564	Gameleira	618.269999999999982	10	31/8/1997
+221	Everardo Monfort Leitão	3438	PUC	1886.98000000000002	1	22/8/1998
+234	Marcos Ferreira Dinardi	99600	UFMG	1271.97000000000003	3	10/7/1999
+257	Adilson de Oliveira	40907	Pampulha	773.860000000000014	6	18/8/1998
+271	Maria Raquel Teixeira de Castro	12839	Cidade Jardim	817.039999999999964	20	30/5/1999
+280	Eurides Alves da Silva	80096	Cidade Jardim	1647.5	6	20/4/2000
+285	Bruno Tadeu Pita	26378	Central	749.42999999999995	10	11/2/1999
+312	Germano Luiz de Paula	93134	Pampulha	258.850000000000023	4	14/3/2000
+327	Thiago Leôncio Guimarães	29089	UFMG	652.909999999999968	9	7/3/1999
+335	Marco Aurélio Santos	53618	Gameleira	1696.58999999999992	9	14/12/1999
+338	Carolina Soares	46389	Pampulha	1324.74000000000001	7	11/12/1999
+388	Clayton Pereira Bonfim	3694	UFMG	896.279999999999973	16	17/4/1998
+411	Reinaldo Pereira da Silva	57785	Central	249.300000000000011	5	19/2/1998
+422	Gilmar Negreiros Carvalho	94443	Pampulha	875.720000000000027	11	6/12/1999
+494	Frederico de Oliveira Guimarães	40072	Gameleira	250.129999999999995	5	31/5/2000
+517	Marcos Ferreira Dinardi	99600	UFMG	552.549999999999955	20	3/3/1999
+520	Geraldo Oliveira	56490	Gameleira	660.889999999999986	19	8/10/1999
+568	Andre Cabral da Silva	93878	Gameleira	1562.6400000000001	19	17/13/2000
+570	Joaquim Carlos Reis	53568	Central	410.829999999999984	18	28/12/1997
+577	Marcos Cláudio	1274	UFMG	905.07000000000005	14	3/10/1999
+578	Marco Aurélio Santos	4378	Pampulha	1008.52999999999997	7	26/11/1998
+608	Marcos Cláudio	10243	Central	1436.79999999999995	10	10/1/2000
+625	Bruno Tadeu Pita	4564	Gameleira	1966.8900000000001	16	19/4/1998
+629	Fábio Couto Amorim	55816	Central	463.379999999999995	1	15/10/1999
+649	Bruno Miranda Pacheco de Castro	79302	UFMG	1139.07999999999993	8	12/9/2000
+695	Thiago Leôncio Guimarães	66763	Central	759.080000000000041	13	4/8/1998
+699	Eurides Alves da Silva	72802	Gameleira	1921.47000000000003	16	11/5/2000
+715	Gustavo Baer Albuquerque 	21558	Cidade Jardim	1738.61999999999989	17	19/9/1999
+755	Gilmar Negreiros Carvalho	1746	Central	1241.32999999999993	1	23/7/1998
+814	Fábio Couto Amorim	24523	Cidade Jardim	910.82000000000005	19	16/9/1997
+817	Luciana Alves Teixeira	26106	Cidade Jardim	1245.21000000000004	15	28/8/1998
+822	Josenaldo Teixeira Soares	24715	Cidade Jardim	391.329999999999984	5	17/10/1997
+826	Frederico de Oliveira Guimarães	27296	Gameleira	1432.97000000000003	14	32/4/1999
+846	Reinaldo Pereira da Silva	57785	Central	1555.98000000000002	14	21/8/1999
+850	Maria Lúcia Alves	49971	Gameleira	1351.93000000000006	7	2/5/1998
+862	Geraldo Oliveira	51421	Cidade Jardim	1811.75999999999999	5	19/9/1998
+886	Marta Avelar Santos	28935	Gameleira	1589.18000000000006	14	19/2/1998
+890	Andre Cabral da Silva	89893	PUC	1050.33999999999992	1	11/10/1999
+905	Germano Luiz de Paula	28154	UFMG	1416.79999999999995	14	12/2/1998
+930	Maria Raquel Teixeira de Castro	12839	Cidade Jardim	1974.27999999999997	17	7/10/1997
+939	Jefferson Oliveira	88294	PUC	237.599999999999994	18	12/11/1998
+976	Alysson Melim Rocha	84374	Gameleira	1928.68000000000006	13	2/3/2000
+\.
+
+
+--
+-- Name: pk_agencia; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY agencia
+    ADD CONSTRAINT pk_agencia PRIMARY KEY (nome_agencia);
+
+
+--
+-- Name: pk_cliente; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY cliente
+    ADD CONSTRAINT pk_cliente PRIMARY KEY (nome_cliente);
+
+
+--
+-- Name: pk_conta; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY conta
+    ADD CONSTRAINT pk_conta PRIMARY KEY (numero_conta, nome_agencia, nome_cliente);
+
+
+--
+-- Name: pk_deposito; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY deposito
+    ADD CONSTRAINT pk_deposito PRIMARY KEY (numero_deposito);
+
+
+--
+-- Name: pk_emprestimo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY emprestimo
+    ADD CONSTRAINT pk_emprestimo PRIMARY KEY (numero_emprestimo);
+
+
+--
+-- Name: fki_agencia; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_agencia ON conta USING btree (nome_agencia);
+
+
+--
+-- Name: fki_cliente; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_cliente ON conta USING btree (nome_cliente);
+
+
+--
+-- Name: fki_deposito; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_deposito ON deposito USING btree (numero_conta, nome_agencia, nome_cliente);
+
+
+--
+-- Name: fki_emprestimo; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX fki_emprestimo ON emprestimo USING btree (numero_conta, nome_agencia, nome_cliente);
+
+
+--
+-- Name: fk_agencia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY conta
+    ADD CONSTRAINT fk_agencia FOREIGN KEY (nome_agencia) REFERENCES agencia(nome_agencia) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_cliente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY conta
+    ADD CONSTRAINT fk_cliente FOREIGN KEY (nome_cliente) REFERENCES cliente(nome_cliente) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_deposito; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY deposito
+    ADD CONSTRAINT fk_deposito FOREIGN KEY (numero_conta, nome_agencia, nome_cliente) REFERENCES conta(numero_conta, nome_agencia, nome_cliente) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: fk_emprestimo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY emprestimo
+    ADD CONSTRAINT fk_emprestimo FOREIGN KEY (numero_conta, nome_agencia, nome_cliente) REFERENCES conta(numero_conta, nome_agencia, nome_cliente) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -12,6 +12,8 @@ services:
     working_dir: /home/public
     tty: true
     stdin_open: true
+    networks:
+      - mynet
 
   db:
     image: postgres
@@ -22,3 +24,11 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+    volumes:
+      - ./app:/home/public
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
