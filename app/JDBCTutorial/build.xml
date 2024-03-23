@@ -36,6 +36,12 @@
   <property name="ANTPROPERTIES" value="properties/javadb-build-properties.xml"/>
   <import file="${ANTPROPERTIES}"/>
 
+  <target name="mycode">
+    <java classname="com.oracle.tutorial.jdbc.MyQueries"
+          classpathref="CLASSPATH" fork="true" dir=".">
+      <arg value="${PROPERTIESFILE}"/>
+    </java>
+  </target>
 
   <target name="clean">
     <delete dir="classes"/>

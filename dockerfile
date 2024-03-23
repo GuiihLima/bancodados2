@@ -11,4 +11,4 @@ RUN apt-get install -y openjdk-8-jdk && \
     apt-get install -y libderby-java && \
     apt-get install -y ant 
 
-WORKDIR /home/public
+# WORKDIR /home/public
