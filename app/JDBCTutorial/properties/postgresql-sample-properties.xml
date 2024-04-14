@@ -4,7 +4,7 @@
 
   <entry key="dbms">postgresql</entry>
   <entry key="driver">org.postgresql.Driver</entry>
-  <entry key="database_name">IB</entry>
+  <entry key="database_name">IB2</entry>
   <entry key="user_name">postgres</entry>
   <entry key="password">postgres</entry>
   <entry key="server_name">localhost</entry>

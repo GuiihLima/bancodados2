@@ -1,9 +1,13 @@
 package com.oracle.tutorial.jdbc;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class MyQueries {
   
@@ -14,27 +18,6 @@ public class MyQueries {
     this.con = connArg;
     this.settings = settingsArg;
   }
-
-//  public static void getMyData(String supplierName, Connection con) throws SQLException {
-//    Statement stmt = null;
-//    String query =
-//            "SELECT COFFEES.COF_NAME FROM COFFEES, SUPPLIERS WHERE SUPPLIERS.SUP_NAME LIKE '" +
-//                    supplierName + "' and SUPPLIERS.SUP_ID = COFFEES.SUP_ID";
-//
-//    try {
-//      stmt = con.createStatement();
-//      ResultSet rs = stmt.executeQuery(query);
-//      System.out.println("Coffees bought from " + supplierName + ": ");
-//      while (rs.next()) {
-//        String coffeeName = rs.getString(1);
-//        System.out.println("     " + coffeeName);
-//      }
-//    } catch (SQLException e) {
-//      JDBCUtilities.printSQLException(e);
-//    } finally {
-//      if (stmt != null) { stmt.close(); }
-//    }
-//  }
 
   public static void getMyData(Connection con) throws SQLException {
     Statement stmt = null;
@@ -52,6 +35,53 @@ public class MyQueries {
         String count = rs.getString(2);
         System.out.println("     " + supplierName + "     " + count);
       }
+    } catch (SQLException e) {
+      JDBCUtilities.printSQLException(e);
+    } finally {
+      if (stmt != null) { stmt.close(); }
+    }
+  }
+
+  public static void populateTable(Connection con) throws SQLException, IOException {
+    BufferedReader inputStream = null;
+    Scanner scanned_line = null;
+    String line;
+    String[] value;
+    value = new String[7];
+    Statement stmt = null;
+    int countv;
+    StringBuilder create = new StringBuilder();
+
+    try {
+      stmt = con.createStatement();
+      System.out.printf("Executando DDL/DML:");
+
+      try {
+        inputStream = new BufferedReader(new FileReader("/tmp/debito-populate-table.txt"));
+        while ((line = inputStream.readLine()) != null) {
+          countv = 0;
+          scanned_line = new Scanner(line);
+          scanned_line.useDelimiter("\t");
+          while (scanned_line.hasNext()) {
+            value[countv++] = scanned_line.next();
+          }
+          if (scanned_line != null) {
+            scanned_line.close();
+          }
+          create.append("insert into debito" + " (numero_debito, valor_debito, motivo_debito, data_debito, numero_conta, nome_agencia, nome_cliente)" + " values (")
+                  .append(value[0]).append(", ").append(value[1]).append(", '").append(value[2]).append("', '").append(value[3])
+                  .append("', ").append(value[4]).append(", '").append(value[5]).append("', '").append(value[6]).append("');");
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      } finally {
+        if (inputStream != null) {
+          inputStream.close();
+        }
+      }
+
+      stmt.executeUpdate("truncate table debito");
+      stmt.executeUpdate(create.toString());
     } catch (SQLException e) {
       JDBCUtilities.printSQLException(e);
     } finally {
@@ -78,10 +108,12 @@ public class MyQueries {
     try {
       myConnection = myJDBCUtilities.getConnection();
 
- 	MyQueries.getMyData(myConnection);
+     MyQueries.populateTable(myConnection);
 
     } catch (SQLException e) {
       JDBCUtilities.printSQLException(e);
+    } catch (IOException e) {
+        e.printStackTrace();
     } finally {
       JDBCUtilities.closeConnection(myConnection);
     }
