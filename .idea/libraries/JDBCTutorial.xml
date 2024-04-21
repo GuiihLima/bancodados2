@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="JDBCTutorial">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/Downloads/JDBCTutorial/lib/JDBCTutorial.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
