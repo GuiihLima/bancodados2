@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Sat Mar 23 17:10:11 GMT 2024:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (???): instance a816c00e-018e-6c4a-9696-000004f87fb0 
-on database directory /home/public/JDBCTutorial/testdb with class loader sun.misc.Launcher$AppClassLoader@266474c2 
+Mon Apr 15 21:44:36 BRT 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (???): instance a816c00e-018e-e45c-e44e-000004e26468 
+on database directory /home/guiih/workspace/BD2/app/JDBCTutorial/testdb with class loader sun.misc.Launcher$AppClassLoader@75b84c92 
 Loaded from file:/usr/share/java/derby.jar
 java.vendor=Private Build
 java.runtime.version=1.8.0_402-8u402-ga-2ubuntu1~22.04-b06
-user.dir=/home/public/JDBCTutorial
+user.dir=/home/guiih/workspace/BD2/app/JDBCTutorial
 os.name=Linux
 os.arch=amd64
 os.version=5.15.133.1-microsoft-standard-WSL2

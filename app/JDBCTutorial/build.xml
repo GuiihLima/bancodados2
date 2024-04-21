@@ -33,6 +33,7 @@
 
 <project name="JDBC Tutorial" default="all" basedir=".">
   <property name="ANTPROPERTIES" value="properties/postgresql-build-properties.xml"/>
+<!--  <property name="ANTPROPERTIES" value="properties/javadb-build-properties.xml"/>-->
   <import file="${ANTPROPERTIES}"/>
 
   <target name="mycode">

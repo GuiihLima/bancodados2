@@ -3,7 +3,7 @@
 <properties>
 
   <entry key="dbms">derby</entry>
-  <entry key="jar_file">/home/public/Downloads/JDBCTutorial/lib/JDBCTutorial.jar</entry>
+  <entry key="jar_file">/home/guiih/workspace/BD2/app/JDBCTutorial/lib/JDBCTutorial.jar</entry>
   <entry key="driver">org.apache.derby.jdbc.EmbeddedDriver</entry>
   <entry key="database_name">testdb</entry>
   <entry key="user_name"></entry>

@@ -1,8 +1,8 @@
 #!/bin/sh -
 
 derby=/usr/share/java/derby.jar
-postgres=/home/guiih/workspace/bd2/app/JDBCTutorial/postgresql-42.7.3.jar
-mypath=/home/guiih/workspace/bd2/app/JDBCTutorial
+postgres=/home/guiih/workspace/BD2/app/JDBCTutorial/postgresql-42.7.3.jar
+mypath=/home/guiih/workspace/BD2/app/JDBCTutorial
 mypackage=com/oracle/tutorial/jdbc
 
 if [ -r $mypath/src/$mypackage/$1.java -a -r $mypath/$2 ]
